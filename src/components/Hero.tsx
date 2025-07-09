@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Hero = (): JSX.Element => {
+const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [hasClicked, setHasClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -44,7 +44,9 @@ const Hero = (): JSX.Element => {
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => nextVideoRef.current!.play(),
+          onStart: () => {
+            nextVideoRef.current!.play();
+          },
         });
         gsap.from("#current-video", {
           transformOrigin: "center center",

@@ -3,54 +3,61 @@ import { TiLocationArrow } from "react-icons/ti";
 import Button from "./Button";
 import { useWindowScroll } from "react-use";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
-const navItems = ["Nexus", "Vault", "Prologue", "About", "Contact"];
+gsap.registerPlugin(ScrollTrigger);
 
-const Navbar = () => {
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isIndicatorActive, setisIndicatorActive] = useState(false);
-  const [lastScrollY, setlastScrollY] = useState(0);
-  const [isNavVisible, setisNavVisible] = useState(true);
+const navItems: string[] = ["Nexus", "Vault", "Prologue", "About", "Contact"];
 
-  const navContainerRef = useRef(null);
+const Navbar = (): JSX.Element => {
+  const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+  const [isIndicatorActive, setIsIndicatorActive] = useState<boolean>(false);
+  const [lastScrollY, setLastScrollY] = useState<number>(0);
+  const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
 
-  const audioElementRef = useRef(null);
-
+  const navContainerRef = useRef<HTMLDivElement | null>(null);
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const { y: currentScrollY } = useWindowScroll();
 
   useEffect(() => {
+    const navEl = navContainerRef.current;
+    if (!navEl) return;
+
     if (currentScrollY === 0) {
-      setisNavVisible(true);
-      navContainerRef.current.classList.remove("floating-nav");
+      setIsNavVisible(true);
+      navEl.classList.remove("floating-nav");
     } else if (currentScrollY > lastScrollY) {
-      setisNavVisible(false);
-      navContainerRef.current.classList.add("floating-nav");
-    } else if (currentScrollY < lastScrollY) {
-      setisNavVisible(true);
-      navContainerRef.current.classList.add("floating-nav");
+      setIsNavVisible(false);
+      navEl.classList.add("floating-nav");
+    } else {
+      setIsNavVisible(true);
+      navEl.classList.add("floating-nav");
     }
-    setlastScrollY(currentScrollY);
+    setLastScrollY(currentScrollY);
   }, [currentScrollY, lastScrollY]);
 
   useEffect(() => {
-    gsap.to(navContainerRef.current, {
+    const navEl = navContainerRef.current;
+    if (!navEl) return;
+
+    gsap.to(navEl, {
       y: isNavVisible ? 0 : -100,
       opacity: isNavVisible ? 1 : 0,
       duration: 0.2,
     });
   }, [isNavVisible]);
 
-  const toggleAudioIndicator = () => {
+  const toggleAudioIndicator = (): void => {
     setIsAudioPlaying((prev) => !prev);
-    setisIndicatorActive((prev) => !prev);
+    setIsIndicatorActive((prev) => !prev);
   };
 
   useEffect(() => {
-    if (isAudioPlaying) {
-      audioElementRef.current.play();
-    } else {
-      audioElementRef.current.pause();
-    }
+    const audioEl = audioElementRef.current;
+    if (!audioEl) return;
+
+    if (isAudioPlaying) audioEl.play();
+    else audioEl.pause();
   }, [isAudioPlaying]);
 
   return (

@@ -1,4 +1,18 @@
-const Button = ({ title, id, rightIcon, leftIcon, containerClass }) => {
+export interface ButtonProps {
+  id?: string;
+  title: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  containerClass?: string;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  id,
+  title,
+  leftIcon,
+  rightIcon,
+  containerClass = "",
+}) => {
   return (
     <button
       id={id}
@@ -6,11 +20,9 @@ const Button = ({ title, id, rightIcon, leftIcon, containerClass }) => {
     >
       {leftIcon}
       <span className="relative inline-flex overflow-hidden font-general text-xs uppercase">
-        <div>
-            {title}
-        </div>
+        <div>{title}</div>
       </span>
-        {rightIcon}
+      {rightIcon}
     </button>
   );
 };

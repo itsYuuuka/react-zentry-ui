@@ -10,10 +10,7 @@ interface BentoTiltProps {
   className?: string;
 }
 
-const BentoTilt = ({
-  children,
-  className = "",
-}: BentoTiltProps): JSX.Element => {
+const BentoTilt = ({ children, className = "" }: BentoTiltProps) => {
   const [transformStyle, setTransformStyle] = useState<string>("");
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -56,11 +53,7 @@ interface BentoCardProps {
   description?: string;
 }
 
-const BentoCard = ({
-  src,
-  title,
-  description,
-}: BentoCardProps): JSX.Element => (
+const BentoCard = ({ src, title, description }: BentoCardProps) => (
   <div className="relative size-full">
     <video
       src={src}
@@ -80,7 +73,7 @@ const BentoCard = ({
   </div>
 );
 
-const Features = (): JSX.Element => (
+const Features = () => (
   <section className="bg-black pb-52">
     <div className="container mx-auto px-3 md:px-10">
       <div className="px-5 py-32">

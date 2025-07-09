@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const navItems: string[] = ["Nexus", "Vault", "Prologue", "About", "Contact"];
 
-const Navbar = (): JSX.Element => {
+const Navbar = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState<boolean>(false);
   const [lastScrollY, setLastScrollY] = useState<number>(0);

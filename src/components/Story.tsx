@@ -3,11 +3,12 @@ import gsap from "gsap";
 import RoundedCorners from "./RoundedCorners";
 import Button from "./Button";
 import { useRef } from "react";
+import type { MouseEvent } from "react";
 import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Story = (): JSX.Element => {
+const Story = () => {
   const frameRef = useRef<HTMLImageElement | null>(null);
 
   const handleMouseLeave = (): void => {
@@ -21,7 +22,7 @@ const Story = (): JSX.Element => {
     });
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>): void => {
+  const handleMouseMove = (e: MouseEvent<HTMLImageElement>): void => {
     const element = frameRef.current;
     if (!element) return;
 

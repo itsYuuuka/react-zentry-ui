@@ -7,35 +7,35 @@ import { ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [hasClicked, sethasClicked] = useState(false);
-  const [isLoading, setisLoading] = useState(true);
-  const [loadedVideos, setloadedVideos] = useState(0);
+const Hero = (): JSX.Element => {
+  const [currentIndex, setCurrentIndex] = useState<number>(1);
+  const [hasClicked, setHasClicked] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loadedVideos, setLoadedVideos] = useState<number>(0);
 
   const totalVideos = 4;
-  const nextVideoRef = useRef(null);
+  const nextVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  const handleVideoLoad = () => {
-    setloadedVideos((prev) => prev + 1);
+  const handleVideoLoad = (): void => {
+    setLoadedVideos((prev) => prev + 1);
   };
 
   const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
 
-  const handleMiniVideoPlayerClick = () => {
-    sethasClicked(true);
+  const handleMiniVideoPlayerClick = (): void => {
+    setHasClicked(true);
     setCurrentIndex(upcomingVideoIndex);
   };
 
   useEffect(() => {
-    if (loadedVideos === totalVideos -1) {
-      setisLoading(false);
+    if (loadedVideos === totalVideos - 1) {
+      setIsLoading(false);
     }
-  });
+  }, [loadedVideos, totalVideos]);
 
   useGSAP(
     () => {
-      if (hasClicked) {
+      if (hasClicked && nextVideoRef.current) {
         gsap.set("#next-video", { visibility: "visible" });
         gsap.to("#next-video", {
           transformOrigin: "center center",
@@ -44,7 +44,7 @@ const Hero = () => {
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => nextVideoRef.current.play(),
+          onStart: () => nextVideoRef.current!.play(),
         });
         gsap.from("#current-video", {
           transformOrigin: "center center",
@@ -76,17 +76,16 @@ const Hero = () => {
     });
   });
 
-  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+  const getVideoSrc = (index: number): string => `videos/hero-${index}.mp4`;
 
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
-
       {isLoading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
           <div className="three-body">
-            <div className="three-body__dot"/>
-            <div className="three-body__dot"/>
-            <div className="three-body__dot"/>
+            <div className="three-body__dot" />
+            <div className="three-body__dot" />
+            <div className="three-body__dot" />
           </div>
         </div>
       )}
@@ -149,10 +148,8 @@ const Hero = () => {
             <Button
               id="watch-trailer"
               title="Watch Trailer"
-              left-icon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300"
-              flex-center
-              gap-1
+              leftIcon={<TiLocationArrow />}
+              containerClass="!bg-yellow-300 flex-center gap-1"
             />
           </div>
         </div>
